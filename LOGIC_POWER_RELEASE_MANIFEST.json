@@ -1,0 +1,79 @@
+{
+  "schema": "logic-power-release-manifest/1",
+  "release_id": "logic-power-core-rc1-20260805",
+  "status": "RELEASE_CANDIDATE_UNMERGED",
+  "repository": "cristh99/my_first_repository",
+  "base": {
+    "branch": "main",
+    "commit_sha": "f08ad56816f02b647d5933d721e13742cb5fea42",
+    "tree_sha": "83c9ef61d3b803e28d25824509f037e417639254"
+  },
+  "constraints": {
+    "active_agent_messages": 0,
+    "existing_branches_modified": 0,
+    "workflow_files_added": 0,
+    "workflow_runs_required": 0,
+    "paid_spend_usd": 0,
+    "automatic_merge": false,
+    "production_authority": false
+  },
+  "components": [
+    {
+      "name": "logic_power_v10",
+      "role": "proof-carrying active information planning",
+      "source_pr": 53,
+      "source_head": "ba10d0edc7eb20d499d0481fda2537e782b6efb2",
+      "path": "logic_power_v10",
+      "object_type": "tree",
+      "git_object_sha": "0c5f638687cd5bdc76c88eb09aaa0ddaab358957",
+      "claim_status": "VERIFIED_SCOPED",
+      "claim_boundary": "1000/1000 only inside the declared finite deterministic experiment domain; no global Logic or external-utility claim"
+    },
+    {
+      "name": "logic_power_problem_solver_v1",
+      "role": "typed solver routing, decision, planning and certificates",
+      "source_pr": 84,
+      "source_head": "ec530d91f43172aa339f3d8d2fbf17e773d9bc29",
+      "path": "logic_power_problem_solver_v1",
+      "object_type": "tree",
+      "git_object_sha": "9f2789a09e53d12e112affc3bfd077c8815bffde",
+      "claim_status": "INTERNALLY_VERIFIED",
+      "claim_boundary": "external utility and universal problem-solving superiority are not established"
+    },
+    {
+      "name": "logic_power_knowledge_action_loop_v1",
+      "role": "typed Knowledge-Action authority, evidence and feedback bridges",
+      "source_pr": 90,
+      "source_head": "8a2392ee4f1bca25dec9380830a8a11cf07a95f9",
+      "path": "logic_power_knowledge_action_loop_v1",
+      "object_type": "tree",
+      "git_object_sha": "8f1a2bc5d54964cee88d059e03dfe479d945979e",
+      "claim_status": "INTERNAL_READINESS_808",
+      "claim_boundary": "V4 found zero behavioral differences versus an equally protected monolithic baseline; external advantage remains unestablished"
+    }
+  ],
+  "formal_objects": [
+    {"path": "tla_v10", "object_type": "tree", "git_object_sha": "58acaffaf4e6ef5ab1193ed8ba587de63f355197"},
+    {"path": "tla_problem_solver_v1", "object_type": "tree", "git_object_sha": "8dca67529743a20216c69602efa3cf6a7b276a61"},
+    {"path": "tla_lp_kal_v1", "object_type": "tree", "git_object_sha": "cbd95870fad0f1ac9c75d788474d410ddbd5b6a2"},
+    {"path": "lean_lp_kal_v1", "object_type": "tree", "git_object_sha": "c5553a28fcbd788fdcd0144a01fab49dd795d1e5"},
+    {"path": "ActiveDiscoveryFinite.lean", "object_type": "blob", "git_object_sha": "8c1aa5172b51a8d0ad53da1147b1b0ea6e91114b"},
+    {"path": "ProblemSolverBoundary.lean", "object_type": "blob", "git_object_sha": "736c62d38da4ec76f0d6fba8a124f6b11bf36b52"},
+    {"path": "lakefile.toml", "object_type": "blob", "git_object_sha": "2275046c719104447f18b5af65e4d0bdaae7ff80"},
+    {"path": "lean-toolchain", "object_type": "blob", "git_object_sha": "fd85b262bf1c734663aa8292b0101f672168788f"}
+  ],
+  "documentation_objects": [
+    {"path": "README_v10.md", "object_type": "blob", "git_object_sha": "c4e13c32962d79ad8a31d313b7ac034e63af0e43"},
+    {"path": "README_problem_solver_v1.md", "object_type": "blob", "git_object_sha": "2fd13639a7d2df909f87afab6c460652716391a0"},
+    {"path": "README_lp_kal_v1.md", "object_type": "blob", "git_object_sha": "e5a7f081afdc8bef300e0c047ebbbb063076a300"}
+  ],
+  "excluded_scopes": [
+    "tree_power_* cohorts and outcomes",
+    "domain adapters and domain-specific power compilers",
+    "historical v7/v8 payload bundles",
+    "active-agent artifacts",
+    "new workflow files",
+    "production credentials or authority"
+  ],
+  "promotion_gate": "A bounded live objective must show a measured before/after external delta with reproducible evidence; release consolidation alone does not establish additional power."
+}

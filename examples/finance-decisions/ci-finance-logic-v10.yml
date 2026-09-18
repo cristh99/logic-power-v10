@@ -1,0 +1,54 @@
+name: Finance Logic v10 — proof-carrying financial decisions
+
+on:
+  push:
+    branches:
+      - agent/finance-logic-power-v10
+  pull_request:
+    paths:
+      - 'finance_logic_v10/**'
+      - 'README_finance_logic_v10.md'
+      - '.github/workflows/finance-logic-v10.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Run Finance Logic v10 tests
+        run: python3 -m unittest finance_logic_v10.test_finance_logic_v10
+      - name: Build proof-carrying finance certificates
+        run: python3 -m finance_logic_v10.run_finance_logic_v10
+      - name: Verify all certificates independently
+        shell: bash
+        run: |
+          for certificate in certificates/finance_*.json; do
+            python3 logic_power_v10/verify_logic_power_v10.py "$certificate"
+            node logic_power_v10/verify_logic_power_v10.js "$certificate"
+          done
+      - name: Verify deterministic rebuild
+        shell: bash
+        run: |
+          sha256sum \
+            certificates/finance_*.json \
+            reports/finance_logic_v10_summary.json \
+            > reports/finance_rebuild_before.sha256
+          python3 -m finance_logic_v10.run_finance_logic_v10
+          sha256sum \
+            certificates/finance_*.json \
+            reports/finance_logic_v10_summary.json \
+            > reports/finance_rebuild_after.sha256
+          diff -u reports/finance_rebuild_before.sha256 reports/finance_rebuild_after.sha256
+      - name: Upload Finance Logic v10 evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: finance-logic-v10-evidence
+          path: |
+            certificates/finance_*.json
+            reports/finance_logic_v10_summary.json
+            reports/finance_rebuild_before.sha256
+            reports/finance_rebuild_after.sha256

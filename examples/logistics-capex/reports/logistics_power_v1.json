@@ -1,0 +1,106 @@
+{
+  "certificates": {
+    "exact": {
+      "path": "certificates/logistics_power_v1_capex_exact.json",
+      "sha256": "dcf56272ee9d31d6f810834cebe97695ef2e8f2074dcfe6606038e3415f20eb4"
+    },
+    "impossible": {
+      "path": "certificates/logistics_power_v1_capex_impossible.json",
+      "sha256": "5303c43de1166b32bd27be82055633cdd94153be6abf39e0738f89755c6687f9"
+    },
+    "tampered": {
+      "expected": "REJECT",
+      "path": "certificates/logistics_power_v1_capex_tampered.json"
+    }
+  },
+  "decision": "Authorize candidate-station capacity expansion only when capacity shortage is present and neither rework nor supplier instability is the limiting mechanism.",
+  "exact_case": {
+    "adaptive_expected_cost": [
+      5,
+      2
+    ],
+    "adaptive_root_experiment": "first_pass_yield_audit",
+    "adaptive_worst_cost": [
+      6,
+      1
+    ],
+    "conflict_pairs": 7,
+    "expected_cost_reduction": [
+      7,
+      12
+    ],
+    "hypotheses": 8,
+    "minimum_fixed_basis": [
+      "capacity_stress_pilot",
+      "first_pass_yield_audit",
+      "supplier_continuity_trace"
+    ],
+    "minimum_fixed_cost": [
+      6,
+      1
+    ]
+  },
+  "hypothesis_semantics": {
+    "c0_q0_s0": {
+      "capacity_shortage": false,
+      "quality_rework": false,
+      "supplier_instability": false
+    },
+    "c0_q0_s1": {
+      "capacity_shortage": false,
+      "quality_rework": false,
+      "supplier_instability": true
+    },
+    "c0_q1_s0": {
+      "capacity_shortage": false,
+      "quality_rework": true,
+      "supplier_instability": false
+    },
+    "c0_q1_s1": {
+      "capacity_shortage": false,
+      "quality_rework": true,
+      "supplier_instability": true
+    },
+    "c1_q0_s0": {
+      "capacity_shortage": true,
+      "quality_rework": false,
+      "supplier_instability": false
+    },
+    "c1_q0_s1": {
+      "capacity_shortage": true,
+      "quality_rework": false,
+      "supplier_instability": true
+    },
+    "c1_q1_s0": {
+      "capacity_shortage": true,
+      "quality_rework": true,
+      "supplier_instability": false
+    },
+    "c1_q1_s1": {
+      "capacity_shortage": true,
+      "quality_rework": true,
+      "supplier_instability": true
+    }
+  },
+  "impossible_case": {
+    "meaning": "A true capacity-only world and a supplier-instability world require opposite decisions but are observationally identical without a supplier continuity trace.",
+    "obstruction": [
+      "c1_q0_s0",
+      "c1_q0_s1"
+    ],
+    "removed_experiment": "supplier_continuity_trace"
+  },
+  "logic_source": {
+    "engine": "Logic Power v10",
+    "private_pr": 53,
+    "verified_head": "ba10d0edc7eb20d499d0481fda2537e782b6efb2"
+  },
+  "negative_control": {
+    "python_error": "payload-hash",
+    "tampered_certificate_rejected": true
+  },
+  "promotion_boundary": "This proves the compiler and synthetic gate, not real-world causal validity or production readiness. Promotion requires a versioned operational dataset, a predeclared pilot, guardrails, and before/after service-cost-risk evidence.",
+  "schema": "logistics-power-v1/report/1",
+  "scope": "finite deterministic logistics hypotheses, declared probes, exact rational costs and priors; advisory only",
+  "status": "PASS_FINITE_DECLARED_DOMAIN"
+}

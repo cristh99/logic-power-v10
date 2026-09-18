@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+"use strict";
+const crypto=require("node:crypto"),fs=require("node:fs");
+const SCHEMA="logic-power-knowledge-action-loop/certificate/1";
+const STATUSES=new Set(["PASS","PASS_CON_LIMITES","PARTIAL","FAIL","BLOCKED","NO_EVALUABLE","REVERTED"]);
+function exact(v,p="$"){if(Array.isArray(v)){v.forEach((x,i)=>exact(x,`${p}[${i}]`));return;}if(v!==null&&typeof v==="object"){Object.keys(v).forEach(k=>exact(v[k],`${p}.${k}`));return;}if(typeof v==="number"){if(!Number.isSafeInteger(v))throw new Error(`unsafe-number:${p}`);return;}if(v===null||typeof v==="string"||typeof v==="boolean")return;throw new Error(`unsupported-type:${p}`);}
+function canonical(v){if(Array.isArray(v))return`[${v.map(canonical).join(",")}]`;if(v!==null&&typeof v==="object"){const ks=Object.keys(v).sort();return`{${ks.map(k=>`${JSON.stringify(k)}:${canonical(v[k])}`).join(",")}}`;}return JSON.stringify(v);}
+function digest(v){exact(v);return crypto.createHash("sha256").update(canonical(v),"utf8").digest("hex");}
+const isHash=v=>typeof v==="string"&&/^[0-9a-f]{64}$/.test(v);
+function verify(c){const e=[];if(!c||typeof c!=="object"||Array.isArray(c))return["certificate"];if(c.schema!==SCHEMA)e.push("schema");const p=c.payload;if(!p||typeof p!=="object"||Array.isArray(p))return e.concat("payload");try{if(c.payload_sha256!==digest(p))e.push("payload-hash");}catch(x){e.push(String(x.message||x));}if(!STATUSES.has(p.status))e.push("status");if(!isHash(p.state_sha256))e.push("state_sha256");if(!isHash(p.core_state_sha256))e.push("core_state_sha256");if(!Number.isSafeInteger(p.receipt_count)||p.receipt_count<0)e.push("receipt-count");if(!Array.isArray(p.receipt_errors)||p.receipt_errors.some(x=>typeof x!=="string"))e.push("receipt-errors");else if(p.status==="PASS"&&p.receipt_errors.length)e.push("pass-with-errors");if(!Array.isArray(p.mandates))e.push("mandates");if(!p.result||typeof p.result!=="object"||Array.isArray(p.result))e.push("result");return e;}
+if(process.argv.length!==3){console.error("usage: verify_lp_kal_v1.js <certificate.json>");process.exit(2);}let c;try{c=JSON.parse(fs.readFileSync(process.argv[2],"utf8"));}catch(x){console.error(JSON.stringify({valid:false,errors:["json"]}));process.exit(1);}const errors=verify(c);console.log(JSON.stringify({valid:errors.length===0,errors}));process.exit(errors.length?1:0);

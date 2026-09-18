@@ -1,0 +1,186 @@
+{
+  "payload": {
+    "analysis": {
+      "cegis_basis": null,
+      "conflict_pairs": [
+        [
+          "c0_q0_s0",
+          "c1_q0_s0"
+        ],
+        [
+          "c0_q0_s1",
+          "c1_q0_s0"
+        ],
+        [
+          "c0_q1_s0",
+          "c1_q0_s0"
+        ],
+        [
+          "c0_q1_s1",
+          "c1_q0_s0"
+        ],
+        [
+          "c1_q0_s0",
+          "c1_q0_s1"
+        ],
+        [
+          "c1_q0_s0",
+          "c1_q1_s0"
+        ],
+        [
+          "c1_q0_s0",
+          "c1_q1_s1"
+        ]
+      ],
+      "fixed_basis": null,
+      "fixed_basis_cost": null,
+      "obstruction": [
+        "c1_q0_s0",
+        "c1_q0_s1"
+      ],
+      "policy": {
+        "exact": false,
+        "expected_cost": [
+          0,
+          1
+        ],
+        "tree": {
+          "belief": [
+            "c0_q0_s0",
+            "c0_q0_s1",
+            "c0_q1_s0",
+            "c0_q1_s1",
+            "c1_q0_s0",
+            "c1_q0_s1",
+            "c1_q1_s0",
+            "c1_q1_s1"
+          ],
+          "expected_cost": [
+            0,
+            1
+          ],
+          "obstruction": [
+            "c1_q0_s0",
+            "c1_q0_s1"
+          ],
+          "status": "IMPOSSIBLE",
+          "worst_cost": [
+            0,
+            1
+          ]
+        },
+        "worst_cost": [
+          0,
+          1
+        ]
+      }
+    },
+    "case": "logistics_capex_gate_missing_supplier_sensor",
+    "problem": {
+      "experiments": [
+        {
+          "cost": [
+            4,
+            1
+          ],
+          "name": "capacity_stress_pilot",
+          "observations": {
+            "c0_q0_s0": "capacity_adequate",
+            "c0_q0_s1": "capacity_adequate",
+            "c0_q1_s0": "capacity_adequate",
+            "c0_q1_s1": "capacity_adequate",
+            "c1_q0_s0": "capacity_constrained",
+            "c1_q0_s1": "capacity_constrained",
+            "c1_q1_s0": "capacity_constrained",
+            "c1_q1_s1": "capacity_constrained"
+          }
+        },
+        {
+          "cost": [
+            1,
+            1
+          ],
+          "name": "first_pass_yield_audit",
+          "observations": {
+            "c0_q0_s0": "first_pass_yield_ok",
+            "c0_q0_s1": "first_pass_yield_ok",
+            "c0_q1_s0": "rework_excess",
+            "c0_q1_s1": "rework_excess",
+            "c1_q0_s0": "first_pass_yield_ok",
+            "c1_q0_s1": "first_pass_yield_ok",
+            "c1_q1_s0": "rework_excess",
+            "c1_q1_s1": "rework_excess"
+          }
+        }
+      ],
+      "hypotheses": [
+        {
+          "id": "c0_q0_s0",
+          "prior": [
+            1,
+            8
+          ],
+          "property": false
+        },
+        {
+          "id": "c0_q0_s1",
+          "prior": [
+            1,
+            8
+          ],
+          "property": false
+        },
+        {
+          "id": "c0_q1_s0",
+          "prior": [
+            1,
+            8
+          ],
+          "property": false
+        },
+        {
+          "id": "c0_q1_s1",
+          "prior": [
+            1,
+            8
+          ],
+          "property": false
+        },
+        {
+          "id": "c1_q0_s0",
+          "prior": [
+            1,
+            8
+          ],
+          "property": true
+        },
+        {
+          "id": "c1_q0_s1",
+          "prior": [
+            1,
+            8
+          ],
+          "property": false
+        },
+        {
+          "id": "c1_q1_s0",
+          "prior": [
+            1,
+            8
+          ],
+          "property": false
+        },
+        {
+          "id": "c1_q1_s1",
+          "prior": [
+            1,
+            8
+          ],
+          "property": false
+        }
+      ]
+    },
+    "schema": "logic-power-v10/active-discovery-certificate/1"
+  },
+  "sha256": "5303c43de1166b32bd27be82055633cdd94153be6abf39e0738f89755c6687f9"
+}

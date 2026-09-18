@@ -1,0 +1,320 @@
+{
+  "payload": {
+    "analysis": {
+      "cegis_basis": [
+        "capacity_stress_pilot",
+        "supplier_continuity_trace",
+        "first_pass_yield_audit"
+      ],
+      "conflict_pairs": [
+        [
+          "c0_q0_s0",
+          "c1_q0_s0"
+        ],
+        [
+          "c0_q0_s1",
+          "c1_q0_s0"
+        ],
+        [
+          "c0_q1_s0",
+          "c1_q0_s0"
+        ],
+        [
+          "c0_q1_s1",
+          "c1_q0_s0"
+        ],
+        [
+          "c1_q0_s0",
+          "c1_q0_s1"
+        ],
+        [
+          "c1_q0_s0",
+          "c1_q1_s0"
+        ],
+        [
+          "c1_q0_s0",
+          "c1_q1_s1"
+        ]
+      ],
+      "fixed_basis": [
+        "capacity_stress_pilot",
+        "first_pass_yield_audit",
+        "supplier_continuity_trace"
+      ],
+      "fixed_basis_cost": [
+        6,
+        1
+      ],
+      "obstruction": null,
+      "policy": {
+        "exact": true,
+        "expected_cost": [
+          5,
+          2
+        ],
+        "tree": {
+          "belief": [
+            "c0_q0_s0",
+            "c0_q0_s1",
+            "c0_q1_s0",
+            "c0_q1_s1",
+            "c1_q0_s0",
+            "c1_q0_s1",
+            "c1_q1_s0",
+            "c1_q1_s1"
+          ],
+          "children": {
+            "first_pass_yield_ok": {
+              "belief": [
+                "c0_q0_s0",
+                "c0_q0_s1",
+                "c1_q0_s0",
+                "c1_q0_s1"
+              ],
+              "children": {
+                "supplier_stable": {
+                  "belief": [
+                    "c0_q0_s0",
+                    "c1_q0_s0"
+                  ],
+                  "children": {
+                    "capacity_adequate": {
+                      "belief": [
+                        "c0_q0_s0"
+                      ],
+                      "expected_cost": [
+                        0,
+                        1
+                      ],
+                      "status": "FALSE",
+                      "worst_cost": [
+                        0,
+                        1
+                      ]
+                    },
+                    "capacity_constrained": {
+                      "belief": [
+                        "c1_q0_s0"
+                      ],
+                      "expected_cost": [
+                        0,
+                        1
+                      ],
+                      "status": "TRUE",
+                      "worst_cost": [
+                        0,
+                        1
+                      ]
+                    }
+                  },
+                  "expected_cost": [
+                    4,
+                    1
+                  ],
+                  "experiment": "capacity_stress_pilot",
+                  "experiment_cost": [
+                    4,
+                    1
+                  ],
+                  "status": "UNKNOWN",
+                  "worst_cost": [
+                    4,
+                    1
+                  ]
+                },
+                "supplier_unstable": {
+                  "belief": [
+                    "c0_q0_s1",
+                    "c1_q0_s1"
+                  ],
+                  "expected_cost": [
+                    0,
+                    1
+                  ],
+                  "status": "FALSE",
+                  "worst_cost": [
+                    0,
+                    1
+                  ]
+                }
+              },
+              "expected_cost": [
+                3,
+                1
+              ],
+              "experiment": "supplier_continuity_trace",
+              "experiment_cost": [
+                1,
+                1
+              ],
+              "status": "UNKNOWN",
+              "worst_cost": [
+                5,
+                1
+              ]
+            },
+            "rework_excess": {
+              "belief": [
+                "c0_q1_s0",
+                "c0_q1_s1",
+                "c1_q1_s0",
+                "c1_q1_s1"
+              ],
+              "expected_cost": [
+                0,
+                1
+              ],
+              "status": "FALSE",
+              "worst_cost": [
+                0,
+                1
+              ]
+            }
+          },
+          "expected_cost": [
+            5,
+            2
+          ],
+          "experiment": "first_pass_yield_audit",
+          "experiment_cost": [
+            1,
+            1
+          ],
+          "status": "UNKNOWN",
+          "worst_cost": [
+            6,
+            1
+          ]
+        },
+        "worst_cost": [
+          6,
+          1
+        ]
+      }
+    },
+    "case": "logistics_capex_gate_exact",
+    "problem": {
+      "experiments": [
+        {
+          "cost": [
+            4,
+            1
+          ],
+          "name": "capacity_stress_pilot",
+          "observations": {
+            "c0_q0_s0": "capacity_adequate",
+            "c0_q0_s1": "capacity_adequate",
+            "c0_q1_s0": "capacity_adequate",
+            "c0_q1_s1": "capacity_adequate",
+            "c1_q0_s0": "capacity_constrained",
+            "c1_q0_s1": "capacity_constrained",
+            "c1_q1_s0": "capacity_constrained",
+            "c1_q1_s1": "capacity_constrained"
+          }
+        },
+        {
+          "cost": [
+            1,
+            1
+          ],
+          "name": "first_pass_yield_audit",
+          "observations": {
+            "c0_q0_s0": "first_pass_yield_ok",
+            "c0_q0_s1": "first_pass_yield_ok",
+            "c0_q1_s0": "rework_excess",
+            "c0_q1_s1": "rework_excess",
+            "c1_q0_s0": "first_pass_yield_ok",
+            "c1_q0_s1": "first_pass_yield_ok",
+            "c1_q1_s0": "rework_excess",
+            "c1_q1_s1": "rework_excess"
+          }
+        },
+        {
+          "cost": [
+            1,
+            1
+          ],
+          "name": "supplier_continuity_trace",
+          "observations": {
+            "c0_q0_s0": "supplier_stable",
+            "c0_q0_s1": "supplier_unstable",
+            "c0_q1_s0": "supplier_stable",
+            "c0_q1_s1": "supplier_unstable",
+            "c1_q0_s0": "supplier_stable",
+            "c1_q0_s1": "supplier_unstable",
+            "c1_q1_s0": "supplier_stable",
+            "c1_q1_s1": "supplier_unstable"
+          }
+        }
+      ],
+      "hypotheses": [
+        {
+          "id": "c0_q0_s0",
+          "prior": [
+            1,
+            8
+          ],
+          "property": false
+        },
+        {
+          "id": "c0_q0_s1",
+          "prior": [
+            1,
+            8
+          ],
+          "property": false
+        },
+        {
+          "id": "c0_q1_s0",
+          "prior": [
+            1,
+            8
+          ],
+          "property": false
+        },
+        {
+          "id": "c0_q1_s1",
+          "prior": [
+            1,
+            8
+          ],
+          "property": false
+        },
+        {
+          "id": "c1_q0_s0",
+          "prior": [
+            1,
+            8
+          ],
+          "property": true
+        },
+        {
+          "id": "c1_q0_s1",
+          "prior": [
+            1,
+            8
+          ],
+          "property": false
+        },
+        {
+          "id": "c1_q1_s0",
+          "prior": [
+            1,
+            8
+          ],
+          "property": false
+        },
+        {
+          "id": "c1_q1_s1",
+          "prior": [
+            1,
+            8
+          ],
+          "property": false
+        }
+      ]
+    },
+    "schema": "logic-power-v10/active-discovery-certificate/1"
+  },
+  "sha256": "dcf56272ee9d31d6f810834cebe97695ef2e8f2074dcfe6606038e3415f20eb4"
+}

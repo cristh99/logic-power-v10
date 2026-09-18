@@ -1,0 +1,4 @@
+# Reproducibility: certificate hashes and Git tree SHAs depend on byte-exact
+# content. Force LF so a checkout on Windows does not break verification.
+* text=auto eol=lf
+*.jar binary

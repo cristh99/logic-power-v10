@@ -1,0 +1,85 @@
+name: Logistics Power v1
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "logic_power_v10/**"
+      - "logistics_power_v1/**"
+      - "README_logistics_power_v1.md"
+      - ".github/workflows/logistics-power-v1.yml"
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run Logic Power v10 and logistics tests
+        run: |
+          python -m unittest \
+            logic_power_v10.test_logic_power_v10 \
+            logistics_power_v1.test_logistics_power_v1
+      - name: Build proof-carrying logistics evidence
+        run: python -m logistics_power_v1.run_logistics_power_v1
+      - name: Independent Python replay
+        run: |
+          python -m logic_power_v10.verify_logic_power_v10 \
+            certificates/logistics_power_v1_capex_exact.json
+          python -m logic_power_v10.verify_logic_power_v10 \
+            certificates/logistics_power_v1_capex_impossible.json
+      - name: Independent Node BigInt replay
+        run: |
+          node logic_power_v10/verify_logic_power_v10.js \
+            certificates/logistics_power_v1_capex_exact.json
+          node logic_power_v10/verify_logic_power_v10.js \
+            certificates/logistics_power_v1_capex_impossible.json
+      - name: Negative controls must fail closed
+        run: |
+          if python -m logic_power_v10.verify_logic_power_v10 \
+            certificates/logistics_power_v1_capex_tampered.json; then
+            echo "Python verifier accepted tampered evidence"
+            exit 1
+          fi
+          if node logic_power_v10/verify_logic_power_v10.js \
+            certificates/logistics_power_v1_capex_tampered.json; then
+            echo "Node verifier accepted tampered evidence"
+            exit 1
+          fi
+      - name: Check declared frontier
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(
+              Path("reports/logistics_power_v1.json").read_text()
+          )
+          assert report["status"] == "PASS_FINITE_DECLARED_DOMAIN"
+          exact = report["exact_case"]
+          assert exact["minimum_fixed_cost"] == [6, 1]
+          assert exact["adaptive_expected_cost"] == [5, 2]
+          assert exact["expected_cost_reduction"] == [7, 12]
+          assert report["impossible_case"]["obstruction"] == [
+              "c1_q0_s0",
+              "c1_q0_s1",
+          ]
+          assert report["negative_control"][
+              "tampered_certificate_rejected"
+          ] is True
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: logistics-power-v1-evidence
+          path: |
+            certificates/logistics_power_v1_capex_exact.json
+            certificates/logistics_power_v1_capex_impossible.json
+            certificates/logistics_power_v1_capex_tampered.json
+            reports/logistics_power_v1.json
+            reports/logistics_power_v1.canonical.json
+            reports/logistics_power_v1_evidence.sha256
