@@ -172,10 +172,12 @@ def verify_bound_certificate(
 ) -> list[str]:
     """Fail-closed check of a fixed-basis bound certificate.
 
-    Every check is polynomial in the payload; none enumerates subsets of
-    the experiment set. ``semantic-replay`` additionally rebuilds the
-    analysis through :func:`build_bound_certificate` as a determinism
-    check (the Node verifier does not rebuild).
+    Every bound check is polynomial in the payload and none enumerates
+    subsets of the experiment set. The final ``semantic-replay`` step is
+    a determinism check only: it rebuilds the analysis through
+    :func:`build_bound_certificate`, which calls the core
+    ``exact_fixed_basis`` (exponential). The Node verifier does not
+    rebuild, so it stays polynomial end to end.
     """
     payload = (
         certificate.get("payload")

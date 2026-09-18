@@ -64,7 +64,7 @@ forged.json    → python {"errors": ["dual-feasible", "dual-value", "semantic-r
 === deterministic rebuild ===   (sha256 before/after second run: identical)
 === core gates (untouched release) ===
 Ran 12 tests — OK (12/12)
-LOGIC_POWER_RELEASE_MANIFEST_PASS
+LOGIC_POWER_RELEASE_MANIFEST_PASS   (--manifest-only; see reviewer note)
 Ran 7 tests — OK (7/7 manifest tests)
 Ran 10 tests — OK (finance example 10/10)
 Ran 9 tests — OK (logistics example 9/9)
@@ -156,3 +156,33 @@ with `filemode=false`; the manifest test is therefore run with
   determinism check that calls the deterministic builder (which uses the
   core `exact_fixed_basis`); it is not part of the bound argument.
 - No claim of production readiness, causal validity or priority.
+
+## Nota del revisor — 2026-09-18 (Claude, sesión del dueño)
+
+La versión de `ci_v1.sh` entregada por Devin recreaba `lakefile.toml` (bytes
+tomados de un checkout del repositorio privado) y cambiaba a `0644` cuatro
+scripts fijados antes de correr el validador de release. Un gate no debe
+reescribir el árbol que comprueba, y la exclusión de `lakefile.toml` fue una
+decisión deliberada de la publicación (declara una biblioteca y una
+dependencia Mathlib ausentes del árbol). Cambios del revisor, en un commit
+aparte y sin tocar rutas fijadas:
+
+- `ci_v1.sh` valida sólo el contrato del manifiesto (`--manifest-only`) y
+  documenta por qué; ya no crea archivos ni cambia modos.
+- `certificate.py`: la docstring del verificador distingue las comprobaciones
+  polinómicas del paso `semantic-replay` (que reconstruye vía el núcleo).
+- Se eliminó `lakefile.toml` del árbol de trabajo.
+
+**Dos defectos preexistentes de la publicación, para el dueño** (no los
+introduce esta rama; `origin/main` falla igual): (1) `python
+tools/validate_logic_power_release.py --root .` responde `missing release
+object: lakefile.toml` en cualquier sistema operativo; (2) en Linux, además,
+`logic_power_v10/ci_v10.sh`, `logic_power_problem_solver_v1/ci_v1.sh`,
+`ci_formal_v1.sh` y `logic_power_knowledge_action_loop_v1/ci_v1.sh` están en
+el índice como `100755` mientras los árboles fijados esperan `100644`, así que
+tres SHA de componentes no se reproducen (en Windows el bit no existe y por
+eso no se vio). Opciones: publicar `lakefile.toml` (blob `2275046c…`) y
+normalizar los modos con `git update-index --chmod=-x` (blobs idénticos), o
+corregir la fila del README para decir que el validador se ejecuta con
+`--manifest-only`. Las 7 pruebas de `tests/test_logic_power_release_manifest.py`
+usan fixtures sintéticos y pasan en ambos casos.
