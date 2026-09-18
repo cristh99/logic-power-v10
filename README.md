@@ -286,6 +286,12 @@ lectura.
 
 ---
 
+## Skill
+
+`skills/logic-power-v10/SKILL.md` es una skill de agente (formato Agent Skills)
+que enseña a usar y verificar este repositorio: comandos con salidas reales,
+lectura de certificados y verificación independiente con ambos verificadores.
+
 ## English summary
 
 **Logic Power v10 turns finite logical uncertainty into one of exactly two checkable

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Logic Power v10 — decisiones proof-carrying"
+  short_description: "Decisiones con certificado verificable en dominios finitos declarados, con dos verificadores independientes"
+  default_prompt: "Usa $logic-power-v10 para emitir, verificar o interpretar certificados proof-carrying de Logic Power v10."
+policy:
+  allow_implicit_invocation: true
