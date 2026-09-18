@@ -329,6 +329,16 @@ sections 2 and 3 above and check for yourself.
 Reproduction commands, per-component boundaries and the full contents map are in the
 Spanish sections above; every path and command is identical.
 
+A post-release extension outside the manifest, `logic_power_fixed_basis_bound_v1/`, certifies a dual lower bound on the minimum fixed basis (minimality only when `tight`).
+
+---
+
+## Extensión post-release (fuera del manifiesto)
+
+| Ruta | Qué certifica | Reproducción |
+|---|---|---|
+| `logic_power_fixed_basis_bound_v1/` | cota inferior dual para la base fija mínima (minimalidad sólo cuando `tight`) | `bash logic_power_fixed_basis_bound_v1/ci_v1.sh` |
+
 ---
 
 ## Autoría y licencia
