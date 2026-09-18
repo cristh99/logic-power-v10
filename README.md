@@ -93,6 +93,19 @@ respuesta correcta sigue siendo ampliar el lenguaje o conservar la abstención.
 
 ---
 
+## Reproducir en un comando
+
+Con **Python 3.12.11** y **Node 22.14.0** (las versiones fijadas aquí):
+
+```bash
+make check          # o: bash scripts/check.sh
+```
+
+`scripts/check.sh` ejecuta todos los gates de Python y Node, incluidos el CLI
+`python -m logic_power_v10 verify` y las pruebas de paridad de `tests/parity/`,
+y termina con una tabla `gate | result | count`. Los gates de TLA+ y Lean
+siguen separados: `logic_power_v10/ci_v10.sh`.
+
 ## Reproducir los gates
 
 Requisitos: **Python ≥ 3.12**, **Node ≥ 18**, **Java ≥ 11** (para TLA+),

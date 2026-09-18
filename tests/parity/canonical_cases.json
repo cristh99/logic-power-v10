@@ -1,0 +1,310 @@
+{
+  "schema": "logic-power-v10/canonical-parity/1",
+  "description": "Shared canonical-JSON edge cases for the Python and Node Logic Power v10 verifiers. Each case stores the canonical bytes and SHA-256 produced by logic_power_v10/certificate.py; cases where the Node verifier produces different bytes are listed under known_divergences with the Node expectation and the reason.",
+  "cases": [
+    {
+      "name": "empty_object",
+      "value": {},
+      "canonical": "{}",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "name": "empty_array",
+      "value": [],
+      "canonical": "[]",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "name": "empty_containers_nested",
+      "value": {
+        "o": {},
+        "a": [],
+        "s": ""
+      },
+      "canonical": "{\"a\":[],\"o\":{},\"s\":\"\"}",
+      "sha256": "c127f9b3c6f4233b3976f8e2d54486ab15f9a46cfa50fc14ae6d0787d1ac2917"
+    },
+    {
+      "name": "key_order_ascii",
+      "value": {
+        "b": 1,
+        "a": 2,
+        "c": {
+          "y": 1,
+          "x": 2
+        }
+      },
+      "canonical": "{\"a\":2,\"b\":1,\"c\":{\"x\":2,\"y\":1}}",
+      "sha256": "f4023cb7b97a0baad9ed25992125a7340beed5b5a8d393e78043bae73ababcf8"
+    },
+    {
+      "name": "empty_string_key",
+      "value": {
+        "": 1,
+        "a": 2
+      },
+      "canonical": "{\"\":1,\"a\":2}",
+      "sha256": "9cf535828d5dbc2d87d9c4c0b99d9e7308b5fdbd22aac02bac1d60f6ac9aa127"
+    },
+    {
+      "name": "nonascii_key",
+      "value": {
+        "\u00e9": 1,
+        "z": 2
+      },
+      "canonical": "{\"z\":2,\"\\u00e9\":1}",
+      "sha256": "9afbeef73bcfb06633a55651c3ab6bbb9c1f06a86a151f061cd7db9757c38d8d"
+    },
+    {
+      "name": "nonascii_string",
+      "value": {
+        "s": "h\u00e9llo w\u00f6rld"
+      },
+      "canonical": "{\"s\":\"h\\u00e9llo w\\u00f6rld\"}",
+      "sha256": "1ab24d21c47edc3dbedef3d7fc58d33f1736e7ac2f8168a70e3d7480cb772aa6"
+    },
+    {
+      "name": "astral_key",
+      "value": {
+        "\ud83d\ude00": 1,
+        "z": 2
+      },
+      "canonical": "{\"z\":2,\"\\ud83d\\ude00\":1}",
+      "sha256": "06466fa4d338287e9f7f8a3b960e102f010da602fabcffc361434e5e0b2da870"
+    },
+    {
+      "name": "astral_string",
+      "value": {
+        "s": "emoji \ud83d\ude00 here"
+      },
+      "canonical": "{\"s\":\"emoji \\ud83d\\ude00 here\"}",
+      "sha256": "f16fd1d098e1262583e689dde01885ca282b34c291cda27ed14027f6e0f5c9d7"
+    },
+    {
+      "name": "astral_vs_high_bmp_key_order",
+      "value": {
+        "\ue000": 1,
+        "\ud83d\ude00": 2,
+        "z": 3
+      },
+      "canonical": "{\"z\":3,\"\\ue000\":1,\"\\ud83d\\ude00\":2}",
+      "sha256": "57308eba4d180e3f30c037360e95865eb7b51fc6c430df0ee4e0c9de3ba8ba30"
+    },
+    {
+      "name": "unicode_escape_input",
+      "value": {
+        "s": "caf\u00e9"
+      },
+      "canonical": "{\"s\":\"caf\\u00e9\"}",
+      "sha256": "339df16d5c73b968aaca8134185e0ae503d071e5b2aac45b1bc567b8f8a89053"
+    },
+    {
+      "name": "control_characters",
+      "value": {
+        "s": "a\nb\tc\"d\\ef"
+      },
+      "canonical": "{\"s\":\"a\\nb\\tc\\\"d\\\\ef\"}",
+      "sha256": "7f269f8c3e38fcb70220e2e435d78a2ebce619e9479555ce2293db648f5d000a"
+    },
+    {
+      "name": "delete_char",
+      "value": {
+        "s": "x\u007fy"
+      },
+      "canonical": "{\"s\":\"x\\u007fy\"}",
+      "sha256": "c9a1060e66af4c59adba7273114044a1405a9d7cf8a0351ee1cd2fa17da18396"
+    },
+    {
+      "name": "big_integer_beyond_2_pow_53",
+      "value": {
+        "n": 9007199254740993
+      },
+      "canonical": "{\"n\":9007199254740993}",
+      "sha256": "4ac8309cc76123ef6c5325ef925fc873e9b5856ec4f844ef1462f9303960378a"
+    },
+    {
+      "name": "huge_integer_30_digits",
+      "value": {
+        "n": 123456789012345678901234567890
+      },
+      "canonical": "{\"n\":123456789012345678901234567890}",
+      "sha256": "03b8f78ef5e8a305f4cda82942db0c6accec4046b40457ae19055ea5e4fff2ac"
+    },
+    {
+      "name": "negative_big_integer",
+      "value": {
+        "n": -9007199254740993
+      },
+      "canonical": "{\"n\":-9007199254740993}",
+      "sha256": "c5727d479f8f5581471838f48f13bbf68f064fa361a41f1bc278355e12a6a012"
+    },
+    {
+      "name": "negative_zero_float",
+      "value": {
+        "n": -0.0
+      },
+      "canonical": "{\"n\":-0.0}",
+      "sha256": "a8a313cade05001e69f7ddb5db01e1e2d06fb8f6913ab492cc4506d4e65d465a"
+    },
+    {
+      "name": "float_one_point_five",
+      "value": {
+        "n": 1.5
+      },
+      "canonical": "{\"n\":1.5}",
+      "sha256": "cb14d55cfe562fd6592d919f5dfacfa8708687b746a1d110c6dd5529c410e772"
+    },
+    {
+      "name": "float_integral_value",
+      "value": {
+        "n": 1.0
+      },
+      "canonical": "{\"n\":1.0}",
+      "sha256": "3b6b06ecd1c968c8e738e0f11c4bb361fca80a9a694de22fe66a05286afbd081"
+    },
+    {
+      "name": "float_small_exponent",
+      "value": {
+        "n": 1e-07
+      },
+      "canonical": "{\"n\":1e-07}",
+      "sha256": "ff7a1315299260617fe404199e54e6d976a0b03e47da54fccec073c2fa48ff5c"
+    },
+    {
+      "name": "float_large_exponent",
+      "value": {
+        "n": 1e+21
+      },
+      "canonical": "{\"n\":1e+21}",
+      "sha256": "f1ee2b60ee95a3170fdc07a577e5f3514ced26867443d69da265acadead81007"
+    },
+    {
+      "name": "float_min_subnormal",
+      "value": {
+        "n": 5e-324
+      },
+      "canonical": "{\"n\":5e-324}",
+      "sha256": "cf4df7d2834198d284947133d3ec7a66f3d94e8d447cac6a0783324211b36d43"
+    },
+    {
+      "name": "booleans_and_null",
+      "value": {
+        "t": true,
+        "f": false,
+        "n": null
+      },
+      "canonical": "{\"f\":false,\"n\":null,\"t\":true}",
+      "sha256": "22e00dc2f7b01420f940fbdbfbdf34fa0667cc6500186495023ba37722cbd05e"
+    },
+    {
+      "name": "nested_arrays",
+      "value": [
+        [
+          1,
+          [
+            2,
+            [
+              3,
+              [
+                4
+              ]
+            ]
+          ]
+        ],
+        {
+          "k": [
+            [
+              []
+            ]
+          ]
+        }
+      ],
+      "canonical": "[[1,[2,[3,[4]]]],{\"k\":[[[]]]}]",
+      "sha256": "3f2e87815573d3b2a4da15f0a6eccdffb03e0cdd00b9a1f79a4e2b3a561b77b8"
+    },
+    {
+      "name": "mixed_array",
+      "value": [
+        3,
+        "x",
+        null,
+        true,
+        [
+          false
+        ],
+        {
+          "k": "v"
+        }
+      ],
+      "canonical": "[3,\"x\",null,true,[false],{\"k\":\"v\"}]",
+      "sha256": "00dae004786596c44462ec3c082633eab811854afaeb6d4dae6cb0cf8487a6a9"
+    }
+  ],
+  "known_divergences": {
+    "nonascii_key": {
+      "node_canonical": "{\"z\":2,\"\u00e9\":1}",
+      "node_sha256": "ebf5b3ac2125f90b74510656202151eacb0fa0dcdf14105494181e8969b802d5",
+      "reason": "Python canonical_json uses ensure_ascii=True (non-ASCII becomes \\uXXXX escapes, astral characters become surrogate pairs); Node JSON.stringify emits raw UTF-8."
+    },
+    "nonascii_string": {
+      "node_canonical": "{\"s\":\"h\u00e9llo w\u00f6rld\"}",
+      "node_sha256": "893a80cc2894f55ba5492e82984d5e0ec49ba43e01765dbfb51b266484791585",
+      "reason": "Python canonical_json uses ensure_ascii=True (non-ASCII becomes \\uXXXX escapes, astral characters become surrogate pairs); Node JSON.stringify emits raw UTF-8."
+    },
+    "astral_key": {
+      "node_canonical": "{\"z\":2,\"\ud83d\ude00\":1}",
+      "node_sha256": "0841b59f082340fe05828d94d16edcf4ecef0cc8ad6fa67a59c7021747b31eb4",
+      "reason": "Python canonical_json uses ensure_ascii=True (non-ASCII becomes \\uXXXX escapes, astral characters become surrogate pairs); Node JSON.stringify emits raw UTF-8."
+    },
+    "astral_string": {
+      "node_canonical": "{\"s\":\"emoji \ud83d\ude00 here\"}",
+      "node_sha256": "2401661f48c7ed56982e1f581fdd1b60a89b2f7801160a12737b2eb058659fdf",
+      "reason": "Python canonical_json uses ensure_ascii=True (non-ASCII becomes \\uXXXX escapes, astral characters become surrogate pairs); Node JSON.stringify emits raw UTF-8."
+    },
+    "astral_vs_high_bmp_key_order": {
+      "node_canonical": "{\"z\":3,\"\ud83d\ude00\":2,\"\ue000\":1}",
+      "node_sha256": "cd0e192e95f5e545c193788e80b08ab3d6fb48a5d20fed4af175061ec107847b",
+      "reason": "Python sorts keys by Unicode code point; Node sorts by UTF-16 code unit, so an astral key (lead surrogate U+D83D) sorts before the high-BMP key U+E000. The ASCII escaping divergence also applies."
+    },
+    "unicode_escape_input": {
+      "node_canonical": "{\"s\":\"caf\u00e9\"}",
+      "node_sha256": "298ebe9dfd0022919780451da01d6ff22cd701ae9f614b77522b751906ac2784",
+      "reason": "Python canonical_json uses ensure_ascii=True (non-ASCII becomes \\uXXXX escapes, astral characters become surrogate pairs); Node JSON.stringify emits raw UTF-8."
+    },
+    "big_integer_beyond_2_pow_53": {
+      "node_canonical": "{\"n\":9007199254740992}",
+      "node_sha256": "66c87d9cb3014e05a11baa97df62282d89d425f22ee15816577c84534e2ef1bb",
+      "reason": "Node JSON.parse rounds integers beyond 2^53 to the nearest IEEE-754 double before stringification; Python parses them exactly."
+    },
+    "huge_integer_30_digits": {
+      "node_canonical": "{\"n\":1.2345678901234568e+29}",
+      "node_sha256": "cf06dd17e5dab029d1ab4c04f5941d7d69ac37a3421b0fc460c48e032b2a94e7",
+      "reason": "Node JSON.parse rounds integers beyond 2^53 to the nearest IEEE-754 double before stringification; Python parses them exactly."
+    },
+    "negative_big_integer": {
+      "node_canonical": "{\"n\":-9007199254740992}",
+      "node_sha256": "b05a958438727696a33ea9f819b69ca4ea39b5ee89f0f80a61d5f813875f9734",
+      "reason": "Node JSON.parse rounds integers beyond 2^53 to the nearest IEEE-754 double before stringification; Python parses them exactly."
+    },
+    "negative_zero_float": {
+      "node_canonical": "{\"n\":0}",
+      "node_sha256": "f3013f933b9fb80ab6d995e7ad9da36f683837ba1d81e950c943d40111eac2f0",
+      "reason": "Python canonicalizes the float -0.0 as -0.0; JSON.stringify(-0) produces 0."
+    },
+    "float_integral_value": {
+      "node_canonical": "{\"n\":1}",
+      "node_sha256": "2bfd14f43d17fc7cea24e0917a8879b4b2f880b8baeec1b9d90fbaad655e71bd",
+      "reason": "Python prints integral floats with a .0 suffix; JSON.stringify prints them as integers."
+    },
+    "float_small_exponent": {
+      "node_canonical": "{\"n\":1e-7}",
+      "node_sha256": "747d6d23b64d1b2d579adb832b44de31c91c875bbef7a8e397f5d183a746b54b",
+      "reason": "Python pads the exponent to two digits (1e-07); JSON.stringify does not (1e-7)."
+    },
+    "delete_char": {
+      "node_canonical": "{\"s\":\"x\u007fy\"}",
+      "node_sha256": "664cf731f778bc625c9fc9ac91863e74b10a0f2d897f0412ae32eff28bbb93ad",
+      "reason": "Python canonical_json escapes U+007F as \\u007f; Node JSON.stringify emits the raw byte."
+    }
+  }
+}

@@ -518,4 +518,8 @@ function main() {
   process.exit(errors.length === 0 ? 0 : 1);
 }
 
-main();
+if (require.main === module) {
+  main();
+}
+
+module.exports = { stableStringify, verify };
